@@ -12,6 +12,37 @@
 	    
 	}, false);
 
+
+    function jsonp(url, callback) {
+        var callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
+        window[callbackName] = function(data) {
+            delete window[callbackName];
+            callback(data);
+        };
+//        alert('about to create script');
+        var script = document.createElement('script');
+        script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'jsonp=' + callbackName;
+        document.body.appendChild(script);
+//        alert('script should be appended');
+    }
+
+
+    safari.application.addEventListener("message", function(event){
+
+        if(event.name === 'get-images'){
+//            alert('got right message');
+            jsonp('http://www.reddit.com/r/doge/.json', function(data) {
+//                alert('in response', data);
+                safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("img-response",data);
+            });
+        }
+
+
+    },false);
+
+
+
+
    </script>
 </head>
 <body>

@@ -17,8 +17,42 @@ function handleMessage(event) {
             addSpanColors();
             addLinkColors();
             modifyHeaders();
-     }
+            getImages();
+    }else if (messageName === 'img-response'){
+        console.log('img-response data:', event.message);
+        appendImages(event.message);
+    }else{
+        console.log('unexpected messageName:', messageName);
+    }
 
+
+}
+
+function appendImages(data){
+
+    var imgs = document.getElementsByTagName('img');
+    console.log('data: %O', data);
+    for(var i = 0; i < imgs.length; i++){
+        if(i < data.data.children.length && data.data.children[i] != undefined){
+            console.log(data.data.children[i].data.url);
+            var url = data.data.children[i].data.url;
+            if(url.match(/png|jpg|gif/g)){
+                imgs[i].src = data.data.children[i].data.url;
+            }
+        }
+
+    }
+//    data.data.children.forEach(function(el){
+//        var img = document.createElement('img');
+//        img.src = el.data.url;
+//        document.body.appendChild(img);
+//    });
+
+}
+
+function getImages(){
+    console.log('getting images');
+    safari.self.tab.dispatchMessage('get-images', null);
 }
 
 function addSpanColors(){
