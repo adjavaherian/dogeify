@@ -30,10 +30,10 @@ function handleMessage(event) {
 function appendImages(data){
 
     var imgs = document.getElementsByTagName('img');
-    console.log('data: %O', data);
+    //console.log('data: %O', data);
     for(var i = 0; i < imgs.length; i++){
         if(i < data.data.children.length && data.data.children[i] != undefined){
-            console.log(data.data.children[i].data.url);
+            //console.log(data.data.children[i].data.url);
             var url = data.data.children[i].data.url;
             if(url.match(/png|jpg|gif/g)){
                 imgs[i].src = data.data.children[i].data.url;
@@ -43,7 +43,6 @@ function appendImages(data){
 }
 
 function getImages(){
-    console.log('getting images');
     safari.self.tab.dispatchMessage('get-images', null);
 }
 
@@ -65,7 +64,7 @@ function modifyHeaders(){
     var h1s = document.getElementsByTagName('h1');
     var h2s = document.getElementsByTagName('h2');
     var wows = ['Such Wow!', 'Such Nice.', 'Wow!', 'So Cool'];
-    var scares = ['so scare', 'plz no', 'so hip!'];
+    var scares = ['so scare', 'plz no', 'so hip!', '...you are right.'];
 
     for(var i = 0; i < h1s.length; i++){
         h1s[i].style.color = randColor();
