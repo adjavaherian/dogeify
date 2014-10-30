@@ -3,15 +3,6 @@
 <head>
    <title>old extension bar page</title>
    <script type="text/javascript">
-	
-	safari.application.addEventListener("command", function(event) {
-		
-	    if(event.command === "make-dogeify") {
-	        safari.application.activeBrowserWindow.activeTab.page.dispatchMessage(event.command);   
-	    }
-	    
-	}, false);
-
 
     function jsonp(url, callback) {
         var callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
@@ -19,20 +10,25 @@
             delete window[callbackName];
             callback(data);
         };
-//        alert('about to create script');
         var script = document.createElement('script');
         script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'jsonp=' + callbackName;
         document.body.appendChild(script);
-//        alert('script should be appended');
     }
 
+    //listen for button commands
+    safari.application.addEventListener("command", function(event) {
 
+        if(event.command === "make-dogeify") {
+            safari.application.activeBrowserWindow.activeTab.page.dispatchMessage(event.command);
+        }
+
+    }, false);
+
+    //listen for messages from injected script
     safari.application.addEventListener("message", function(event){
 
         if(event.name === 'get-images'){
-//            alert('got right message');
             jsonp('http://www.reddit.com/r/doge/.json', function(data) {
-//                alert('in response', data);
                 safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("img-response",data);
             });
         }

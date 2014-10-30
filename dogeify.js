@@ -10,6 +10,7 @@ function randColor() {
     return '#' + Math.floor(Math.random()*16777215).toString(16);
 }
 
+//handle all messages from global
 function handleMessage(event) {
     var messageName = event.name;
 
@@ -19,12 +20,10 @@ function handleMessage(event) {
             modifyHeaders();
             getImages();
     }else if (messageName === 'img-response'){
-        console.log('img-response data:', event.message);
         appendImages(event.message);
     }else{
-        console.log('unexpected messageName:', messageName);
+        //console.log('unexpected messageName:', messageName);
     }
-
 
 }
 
@@ -40,14 +39,7 @@ function appendImages(data){
                 imgs[i].src = data.data.children[i].data.url;
             }
         }
-
     }
-//    data.data.children.forEach(function(el){
-//        var img = document.createElement('img');
-//        img.src = el.data.url;
-//        document.body.appendChild(img);
-//    });
-
 }
 
 function getImages(){
