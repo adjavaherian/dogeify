@@ -32,7 +32,7 @@ function appendImages(data){
     var imgs = document.getElementsByTagName('img');
     //console.log('data: %O', data);
     for(var i = 0; i < imgs.length; i++){
-        if(i < data.data.children.length && data.data.children[i] != undefined){
+        if(i < data.data.children.length && data.data.children[i] !== undefined) {
             //console.log(data.data.children[i].data.url);
             var url = data.data.children[i].data.url;
             if(url.match(/png|jpg|gif/g)){
@@ -73,9 +73,9 @@ function modifyHeaders(){
             h1s[i].innerHTML = h1s[i].innerHTML + ', ' + wows[i];
         }
     }
-    for(var i = 0; i < h2s.length; i++){
-        if(i <= scares.length){
-            h2s[i].innerHTML = h2s[i].innerHTML + '... ' + scares[i];
+    for(var j = 0; j < h2s.length; j++) {
+        if(j <= scares.length){
+            h2s[j].innerHTML = h2s[j].innerHTML + '... ' + scares[j];
         }
     }
 
